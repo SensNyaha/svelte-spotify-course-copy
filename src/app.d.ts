@@ -4,7 +4,11 @@ declare global {
 	namespace App {
 		// interface Error {}
 		// interface Locals {}
-		// interface PageData {}
+		interface PageData {
+			user: SpotifyApi.CurrentUsersProfileResponse | null;
+			url: URL | null;
+		}
+
 		// interface PageState {}
 		// interface Platform {}
 	}

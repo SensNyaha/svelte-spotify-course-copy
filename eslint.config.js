@@ -3,6 +3,7 @@ import ts from 'typescript-eslint';
 import svelte from 'eslint-plugin-svelte';
 import prettier from 'eslint-config-prettier';
 import globals from 'globals';
+import { sveltePreprocess } from 'svelte-preprocess';
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
