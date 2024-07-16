@@ -12,7 +12,6 @@
 	$: if (headerBg) headerBg.style.opacity = scrollY / headerBg.offsetHeight + '';
 
 	let isMobileMenuShowed: boolean = false;
-	let isDesktop: boolean = true;
 
 	export let data: LayoutData;
 </script>
@@ -27,11 +26,7 @@
 <div id="main">
 	{#if data.user}
 		<div id="sidebar">
-			<Navigation
-				{isDesktop}
-				{isMobileMenuShowed}
-				on:close-menu={() => (isMobileMenuShowed = false)}
-			/>
+			<Navigation {isMobileMenuShowed} on:close-menu={() => (isMobileMenuShowed = false)} />
 		</div>
 	{/if}
 	<div id="content">
@@ -43,7 +38,6 @@
 			/>
 			<button
 				class="header-burger"
-				class:hidden={isDesktop}
 				on:click={() => (isMobileMenuShowed = !isMobileMenuShowed)}
 			>
 				<Menu />
@@ -52,7 +46,6 @@
 				<QuickNavigationControl direction="back" />
 				<QuickNavigationControl direction="forward" />
 			</div>
-			<button on:click={() => (isDesktop = !isDesktop)}>Desktop mode: {isDesktop}</button>
 		</header>
 		<main id="main-content" class:user-logged={data.user}>
 			<slot />
@@ -70,10 +63,9 @@
 		#content {
 			flex: 1;
 			height: 99999px;
-			transform: scale(1);
 
 			header#header {
-				position: fixed;
+				position: sticky;
 				height: var(--header-height);
 				padding: 0 15px;
 				display: flex;
@@ -111,10 +103,11 @@
 					max-width: 50px;
 					max-height: 50px;
 					transition: all 0.5s;
-					&.hidden {
+					@include breakpoint.up('md') {
 						max-width: 0;
 						max-height: 0;
 						overflow: hidden;
+						margin-left: -20px;
 					}
 				}
 				.header-controls {

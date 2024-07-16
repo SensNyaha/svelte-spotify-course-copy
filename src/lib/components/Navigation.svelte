@@ -8,7 +8,6 @@
 
 	import { page } from '$app/stores';
 
-	export let isDesktop: boolean = false;
 	export let isMobileMenuShowed: boolean = false;
 
 	const menuItems: { path: string; name: string; icon: ComponentType<Icon> }[] = [
@@ -35,14 +34,10 @@
 	style:left={isMobileMenuShowed ? 'calc(var(--sidebar-width))' : '100%'}
 	on:click={() => dispatch('close-menu')}
 ></div>
-<div class="nav-content" class:isDesktop class:isMobileMenuShowed>
+<div class="nav-content" class:isMobileMenuShowed>
 	<nav aria-label="Main">
 		<div class="nav-content-inner">
-			<button
-				class="nav-close"
-				style:display={isDesktop ? 'none' : 'block'}
-				on:click={() => dispatch('close-menu')}>&times;</button
-			>
+			<button class="nav-close" on:click={() => dispatch('close-menu')}>&times;</button>
 			<img src={logo} alt="Spotify Logo" class="logo" width="100px" />
 			<ul>
 				{#each menuItems as item, index (item.path)}
@@ -113,6 +108,9 @@
 				&:hover {
 					opacity: 1;
 				}
+				@include breakpoint.up('md') {
+					display: none;
+				}
 			}
 
 			ul {
@@ -152,15 +150,13 @@
 			}
 		}
 
-		&.isDesktop {
+		@include breakpoint.up('md') {
 			position: sticky;
 			top: 0;
 			margin-left: 0;
 
 			.nav-content-inner {
-				@include breakpoint.up('md') {
-					display: block;
-				}
+				display: block;
 			}
 		}
 
